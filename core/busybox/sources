@@ -1,4 +1,4 @@
-ttps://git.busybox.net/busybox/snapshot/busybox-1_33_1.tar.gz
+https://git.busybox.net/busybox/snapshot/busybox-1_33_1.tar.gz
 files/.config
 files/.config-suid
 files/acpid.run
