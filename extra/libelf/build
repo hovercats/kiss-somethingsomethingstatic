@@ -17,6 +17,7 @@ sed -i 's/color.*printversion../#/g' lib/Makefile.in
     --disable-symbol-versioning \
     --disable-debuginfod \
     --disable-nls \
+    --disable-shared \
     ac_cv_c99=yes # Override check for Clang.
 
 # Skip the default make target and build only what we need.
