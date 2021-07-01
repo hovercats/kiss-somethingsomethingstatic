@@ -1,4 +1,5 @@
 # kiss-somethingsomethingstatic
 
 In this repo, I experiment with running a staticly linked KISS build.
-I mostly stole these packages from Dilyn's KISS-static, but more will be added as I eventually get around to building things staticly
+I have mostly stolen from Dilyn's KISS-static, or KISS-me repositories, and gone on from there. 
+All packages in Core is currently building as expected, some packages in extra does work aswell, but its a work in progress.
