@@ -3,11 +3,10 @@
 # Build sometimes forces -Werror.
 export CFLAGS="$CFLAGS -Wno-error"
 
-# Enable static linking
-export CFLAGS="$CFLAGS -static"
-
-# Disable configure error for missing argp.
-sed -i 's/as_fn_error.*libargp/: "/g' configure
+# Disable configure error for missing argp, fts, and obstack.
+sed -i -e 's/as_fn_error.*argp/: "/g' \
+       -e 's/as_fn_error.*fts/: "/g' \
+       -e 's/as_fn_error.*obstack/: "/g' configure
 
 # Don't compile two unrelated C files which require argp.
 sed -i 's/color.*printversion../#/g' lib/Makefile.in
@@ -17,7 +16,6 @@ sed -i 's/color.*printversion../#/g' lib/Makefile.in
     --disable-symbol-versioning \
     --disable-debuginfod \
     --disable-nls \
-    --disable-shared \
     ac_cv_c99=yes # Override check for Clang.
 
 # Skip the default make target and build only what we need.
@@ -27,3 +25,10 @@ make -C libelf DESTDIR="$1" install
 
 mkdir -p "$1/usr/lib/pkgconfig"
 cp -f config/libelf.pc "$1/usr/lib/pkgconfig/libelf.pc"
+
+# Remove shared libs
+# Config is made so its builds both static and shared for some reason
+# and we want static libs
+for lib in libelf.so libelf.so.1 libelf-$2.so; do
+    rm -f "$1/usr/lib/$lib"
+done
