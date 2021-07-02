@@ -42,7 +42,6 @@ esac
 	--enable-languages=c,c++ \
 	--without-included-gettext \
 	--with-system-zlib \
-	--disable-shared \
 	--with-static-standard-libraries \
 	"${bootstrap:---enable-bootstrap}"
 
