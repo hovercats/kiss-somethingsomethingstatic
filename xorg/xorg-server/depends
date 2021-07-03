@@ -1,24 +1,24 @@
-bzip2
-freetype-harfbuzz
-libX11
-libXau
-libXdamage
-libXext
-libXfixes
-libXfont2
-libXxf86vm
-libdrm
-libepoxy
-libfontenc
-libpciaccess
-libressl
-libxcb
-libxkbfile
-libxshmfence
+bzip2 make
+freetype-harfbuzz make
+libX11 make
+libXau make
+libXdamage make
+libXext make
+libXfixes make
+libXfont2 make
+libXxf86vm make
+libdrm make
+libepoxy make
+libfontenc make
+libpciaccess make 
+libressl make
+libxcb make
+libxkbfile make
+libxshmfence make
 linux-headers make
-mesa
-pixman
+mesa make
+pixman make
 pkgconf make
-xkeyboard-config
+xkeyboard-config make
 xtrans make
-zlib
+zlib make
