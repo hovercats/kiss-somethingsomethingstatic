@@ -23,7 +23,6 @@ export PATH=$PATH:$PWD
 	--disable-werror \
 	--disable-multilib \
 	--disable-readline \
-	--enable-lto \
   --enable-static \
 	--enable-ld=default \
 	--enable-plugins \
