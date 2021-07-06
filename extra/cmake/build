@@ -1,0 +1,42 @@
+#!/bin/sh -e
+
+CFLAGS=$(printf   %s "$CFLAGS"   | sed 's/-static//g')
+CXXFLAGS=$(printf %s "$CXXFLAGS" | sed 's/-static//g')
+
+CFLAGS=$(printf   %s "$CFLAGS"   | sed 's/-flto=thin//g')
+CXXFLAGS=$(printf %s "$CXXFLAGS" | sed 's/-flto=thin//g')
+
+echo $CFLAGS
+
+patch -p1 < cmake-no-execinfo.patch
+
+if kiss l cmake; then
+    export DESTDIR="$1"
+
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_USE_SYSTEM_CURL=True \
+        -DCMAKE_USE_SYSTEM_EXPAT=True \
+        -DCMAKE_USE_SYSTEM_ZLIB=True \
+        -DCMAKE_USE_SYSTEM_BZIP2=True \
+        -DOPENSSL_USE_STATIC_LIBS=TRUE
+
+    cmake --build   build
+    cmake --install build
+
+else
+    ./configure \
+        --prefix=/usr \
+        --system-curl \
+        --system-expat \
+        --system-zlib \
+        --system-bzip2 -- \
+        -DOPENSSL_USE_STATIC_LIBS=TRUE
+
+    make
+    make DESTDIR="$1" install
+fi
+
+rm -rf "$1/usr/doc"
+rm -rf "$1/usr/share/cmake"*/Help
