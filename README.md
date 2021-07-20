@@ -1,5 +1,8 @@
 # kiss-somethingsomethingstatic
 
+Note: I will no longer be committing to this repo, as Ive moved over to my [Kiss-dumpsterfire repo](https://github.com/hovercats/kiss-dumpsterfire) instead, to keep the workload smaller with only one repo to work with. 
+
+
 An experimental repo for building statically linked packages. 
 I basiclly stole all packages from [KISS-static](https://github.com/dilyn-corner/kiss-static), and went from there. 
 All packages in core *should* build successfully. 
