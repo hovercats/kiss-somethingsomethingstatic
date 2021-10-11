@@ -2,8 +2,10 @@
 
 ./configure \
     --prefix=/usr \
+    --disable-doc \
     --disable-nls \
     --disable-shared
 
-make
-make DESTDIR="$1" install
+
+make LDFLAGS=--static
+make install
