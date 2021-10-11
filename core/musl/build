@@ -11,7 +11,7 @@
 #   --enable-debug
 
 make
-make DESTDIR="$1" install
+make install
 
 # Install BSD compatibility headers.
 install -Dm 755 cdefs.h "$1/usr/include/sys/cdefs.h"
@@ -19,8 +19,8 @@ install -Dm 755 queue.h "$1/usr/include/sys/queue.h"
 install -Dm 755 tree.h  "$1/usr/include/sys/tree.h"
 
 # Strange linker error here?
-cc getconf.c -o getconf
-cc getent.c  -o getent
+cc -static getconf.c -o getconf
+cc -static getent.c  -o getent
 
 for bin in getconf getent; do
     install -Dm755 "$bin" "$1/usr/bin/$bin"
