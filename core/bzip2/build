@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
-#make CC="${CC:-cc} $CFLAGS -static -fPIC $LDFLAGS" 
-make CC="${CC:-cc} $CFLAGS -static $LDFLAGS" 
+make CC="${CC:-cc} $CFLAGS -static"
 
 for bin in bzip2 bzdiff bzgrep bzip2recover bzmore; do
     install -Dm755 "$bin" "$1/usr/bin/$bin"
