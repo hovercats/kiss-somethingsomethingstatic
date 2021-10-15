@@ -1,8 +1,16 @@
 #!/bin/sh -e
 
+export LDFLAGS="$LDFLAGS -static"
+
+# Make sure gmp is built with generic options.
+cp gcc/gmp/configfsf.guess gcc/gmp/config.guess
+cp gcc/gmp/configfsf.sub   gcc/gmp/config.sub
+
 # Use lib not lib64 by default.
-sed -i '/m64=/s/lib64/lib/' gcc/gcc/config/i386/t-linux64
-sed -i 's/lib64/lib/'       gcc/gcc/config/i386/linux64.h
+sed '/m64=/s/lib64/lib/' gcc/gcc/config/i386/t-linux64 > _
+mv -f _ gcc/gcc/config/i386/t-linux64
+sed 's/lib64/lib/' gcc/gcc/config/i386/linux64.h > _
+mv -f _ gcc/gcc/config/i386/linux64.h
 
 # Build must happen outside of gcc source.
 mkdir -p gcc-build
@@ -18,43 +26,53 @@ case $2 in "$gcc_version"*)
     bootstrap=--disable-bootstrap
 esac
 
-../gcc/configure \
-	--prefix=/usr \
-	--libexecdir=/usr/lib \
-	--mandir=/usr/share/man \
-	--infodir=/usr/share/info \
-	--build=x86_64-pc-linux-musl \
-	--disable-lto \
-	--disable-nls \
-	--disable-libmpx \
-	--disable-shared \
-	--disable-werror \
-	--disable-multilib \
-	--disable-libmudflap \
-	--disable-fixed-point \
-	--disable-libsanitizer \
-	--disable-libstdcxx-pch \
-	--enable-checking=release \
-	--enable-tls \
-	--enable-threads \
-	--enable-default-ssp \
-	--enable-__cxa_atexit \
-	--enable-languages=c,c++ \
-	--without-included-gettext \
-	--with-system-zlib \
-	--with-static-standard-libraries \
-	"${bootstrap:---enable-bootstrap}"
+export libat_cv_have_ifunc=no
 
-make
-make DESTDIR="$1" install
+../gcc/configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib \
+    --mandir=/usr/share/man \
+    --infodir=/usr/share/info \
+    --disable-multilib \
+    --disable-symvers \
+    --disable-libmpx \
+    --disable-libmudflap \
+    --disable-libsanitizer \
+    --disable-werror \
+    --disable-fixed-point \
+    --disable-libstdcxx-pch \
+    --disable-nls \
+    --enable-checking=release \
+    --enable-__cxa_atexit \
+    --enable-default-pie \
+    --enable-default-ssp \
+    --enable-threads \
+    --enable-tls \
+    --enable-initfini-array \
+    --enable-languages=c,c++ \
+    --without-included-gettext \
+    --with-zstd=no \
+    --with-system-zlib \
+    --with-static-standard-libaries \
+    --disable-shared \
+    --build=x86_64-pc-linux-musl \
+    "${bootstrap:---enable-bootstrap}"
+
+make 
+make install
 
 # Save 35MB.
 find "$1" -name libgtkpeer.a  -exec rm -f {} +
 find "$1" -name libgjsmalsa.a -exec rm -f {} +
 find "$1" -name libgij.a      -exec rm -f {} +
 
-# Some legacy programs will expect cc
-ln -s gcc "$1/usr/bin/cc"
+ln -sf gcc "$1/usr/bin/cc"
+cp -f ../c99 "$1/usr/bin"
 
-# POSIX compliance.
-install -Dm755 ../c99 "$1/usr/bin/c99"
+# Symlink for LTO.
+{
+    mkdir -p "$1/usr/lib/bfd-plugins"
+
+    ln -s "/usr/lib/gcc/x86_64-pc-linux-musl/$2/liblto_plugin.so" \
+          "$1/usr/lib/bfd-plugins/liblto_plugin.so"
+}

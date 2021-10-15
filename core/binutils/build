@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < fix-fd-issue.patch
+
 cat > makeinfo <<EOF
 #!/bin/sh
 printf 'makeinfo (GNU texinfo) 5.2\n'
@@ -9,24 +11,25 @@ chmod +x makeinfo
 export PATH=$PATH:$PWD
 
 ./configure \
-	--prefix=/usr \
-	--with-mmap \
-	--with-system-zlib \
-	--with-targets=x86_64-pep \
-	--with-static-standard-libraries \
-	--with-lib-path=/usr/lib:/usr/local/lib \
-	--disable-gdb \
-	--disable-nls \
-	--disable-gold \
-	--disable-gprof \
-  --disable-shared \
-	--disable-werror \
-	--disable-multilib \
-	--disable-readline \
-  --enable-static \
-	--enable-ld=default \
-	--enable-plugins \
+    --prefix=/usr \
+    --with-lib-path=/usr/lib:/usr/local/lib \
+    --enable-targets=x86_64-pep \
+    --enable-deterministic-archives \
+    --disable-gold \
+    --enable-lto \
+    --enable-ld=default \
+    --enable-plugins \
+    --disable-multilib \
+    --disable-werror \
+    --disable-gdb \
+    --disable-nls \
+    --disable-readline \
+    --disable-gprof \
+    --with-mmap \
+    --with-system-zlib
 
 make configure-host
-make tooldir=/usr
-make DESTDIR="$1" tooldir=/usr install
+make tooldir=/usr LDFLAGS="$LDFLAGS --static -lz -lfl"
+make tooldir=/usr install
+
+ln -sf ld.bfd "$1/usr/bin/ld"

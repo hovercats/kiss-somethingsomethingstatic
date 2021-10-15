@@ -3,32 +3,35 @@
 # Build sometimes forces -Werror.
 export CFLAGS="$CFLAGS -Wno-error"
 
-# Disable configure error for missing argp, fts, and obstack.
-sed -i -e 's/as_fn_error.*argp/: "/g' \
-       -e 's/as_fn_error.*fts/: "/g' \
-       -e 's/as_fn_error.*obstack/: "/g' configure
+# Disable configure error for missing argp/fts/obstack.
+sed 's/as_fn_error.*\(argp\|fts\|_obstack\)/: "/g' configure > _
+mv -f _ configure
 
 # Don't compile two unrelated C files which require argp.
-sed -i 's/color.*printversion../#/g' lib/Makefile.in
+sed 's/color.*printversion../#/g' lib/Makefile.in > _
+mv -f _ lib/Makefile.in
 
-./configure \
+sh ./configure \
     --prefix=/usr \
     --disable-symbol-versioning \
     --disable-debuginfod \
+    --disable-libdebuginfod \
     --disable-nls \
     ac_cv_c99=yes # Override check for Clang.
+
 
 # Skip the default make target and build only what we need.
 make -C lib
 make -C libelf
-make -C libelf DESTDIR="$1" install
+make -C libelf install
+make -C doc    install-man3
 
 mkdir -p "$1/usr/lib/pkgconfig"
 cp -f config/libelf.pc "$1/usr/lib/pkgconfig/libelf.pc"
 
-# Remove shared libs
-# Config is made so its builds both static and shared for some reason
-# and we want static libs
-for lib in libelf.so libelf.so.1 libelf-$2.so; do
-    rm -f "$1/usr/lib/$lib"
-done
+# configure script does not have an option to disable shared libs, so we have to
+# remove them ourselves.
+#rm -rf \
+#    "$1/usr/lib/libelf.so" \
+#    "$1/usr/lib/libelf.so.1" \
+#    "$1/usr/lib/libelf-0.185.so" \
