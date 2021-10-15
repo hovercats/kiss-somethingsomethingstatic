@@ -31,7 +31,7 @@ cp -f config/libelf.pc "$1/usr/lib/pkgconfig/libelf.pc"
 
 # configure script does not have an option to disable shared libs, so we have to
 # remove them ourselves.
-rm -rf \
-    "$1/usr/lib/libelf.so" \
-    "$1/usr/lib/libelf.so.1" \
-    "$1/usr/lib/libelf-0.185.so" \
+#rm -rf \
+#    "$1/usr/lib/libelf.so" \
+#    "$1/usr/lib/libelf.so.1" \
+#    "$1/usr/lib/libelf-0.185.so" \
