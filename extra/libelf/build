@@ -30,10 +30,10 @@ mkdir -p "$1/usr/lib/pkgconfig"
 cp -f config/libelf.pc "$1/usr/lib/pkgconfig/libelf.pc"
 
 # Configure script does not have an option for disabling/enabling static/shared
-# libs. So we delete them, as we dont want any shared libs on our system.
-# However, you probably need these anyway, unless you figure out what config pulls in
-# libelf as a dependency. Its also just a make dependency.
-rm -rf \
-    "$1/usr/lib/libelf.so" \
-    "$1/usr/lib/libelf.so.1" \
-    "$1/usr/lib/libelf-0.185.so" \
+# libs. Deleting them might be preferable, but you most likely need them to be
+# able to build linux. Unless you figure out what config pulls in libelf as a
+# dependency. See #2 for more details
+# rm -rf \
+#    "$1/usr/lib/libelf.so" \
+#    "$1/usr/lib/libelf.so.1" \
+#    "$1/usr/lib/libelf-0.185.so" \
