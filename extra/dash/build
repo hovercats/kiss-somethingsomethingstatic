@@ -1,9 +1,8 @@
 #!/bin/sh -e
 
-export CFLAGS="$CFLAGS -static"
-
 ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --enable-static
 
 make install
 
