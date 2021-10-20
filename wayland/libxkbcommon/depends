@@ -1,6 +1,7 @@
 byacc   make
+libffi make
 meson   make
 pkgconf make
 wayland make
-wayland-protocols
-xkeyboard-config
+wayland-protocols 
+xkeyboard-config 
