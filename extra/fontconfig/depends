@@ -1,0 +1,4 @@
+expat make
+freetype-harfbuzz make
+libxml2 make
+pkgconf make
