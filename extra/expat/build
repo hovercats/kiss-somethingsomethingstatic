@@ -3,7 +3,7 @@
 ./configure \
     --prefix=/usr \
     --disable-shared \
-    --without-exampled \
+    --without-examples \
     --without-tests 
 
 make LDFLAGS="$LDFLAGS --static"
