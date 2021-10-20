@@ -2,8 +2,6 @@
 
 patch -p1 < evdev-wrap.patch
 
-export CFLAGS="$CFLAGS -fPIC"
-
 for pkg in mtdev evdev; do (
     cd "$pkg"
 
