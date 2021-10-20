@@ -1,13 +1,19 @@
 #!/bin/sh -e
 
-export LDFLAGS="$LDFLAGS --static"
+export DESTDIR="$1"
+export LDFLAGS="$LDFLAGS -static"
 
-./configure \
-	--prefix=/usr \
-	--enable-static \
-  --disable-dtd-validation \
-	--disable-documentation \
-  --disable-shared
+sed -i "s/expat'/expat', static: true/" meson.build
+sed -i "s/ffi'/ffi', static: true/"     meson.build
+sed -i "s/subdir('tests')//"            meson.build
 
-make
-make install 
+meson \
+    --prefix=/usr \
+    -Ddefault_library=static \
+    -Dbuildtype=release \
+    -Ddocumentation=false \
+    -Ddtd_validation=false \
+    . build
+
+ninja -C build 
+ninja -C build install

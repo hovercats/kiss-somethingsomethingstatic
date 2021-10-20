@@ -1,6 +1,12 @@
 #!/bin/sh -e
 
-sed -i "s/Terminus/Noto Sans Mono/" clients/status_bar.c
+make \
+	PREFIX=/usr \
+	ENABLE_DEBUG=0 \
+	LDFLAGS="$LDFLAGS --static"
 
-make PREFIX=/usr
-make PREFIX=/usr DESTDIR="$1" install
+make PREFIX=/usr \
+	ENABLE_DEBUG=0 \
+	install
+
+install -Dm755 velox.conf.sample "$1/etc/velox.conf"

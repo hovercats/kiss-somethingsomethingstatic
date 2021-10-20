@@ -1,4 +1,4 @@
-expat make
-flex    make
-libffi make
-pkgconf make
+expat
+flex  make
+libffi
+meson make

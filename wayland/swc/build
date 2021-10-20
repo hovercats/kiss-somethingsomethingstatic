@@ -1,11 +1,15 @@
 #!/bin/sh -e
 
-: "
-patch -p1 < restacking.patch
-patch -p1 < popup.patch
-patch -p1 < subsurface.patch
-patch -p1 < defer.patch
-"
+export LDFLAGS="$LDFLAGS -static"
 
-make
-make PREFIX=/usr DESTDIR="$1" install
+mk() {
+    make \
+        PREFIX=/usr \
+        ENABLE_DEBUG=0 \
+        ENABLE_SHARED=0 \
+        ENABLE_XWAYLAND=0 \
+        "$@"
+}
+
+mk
+mk DESTDIR="$1" install
