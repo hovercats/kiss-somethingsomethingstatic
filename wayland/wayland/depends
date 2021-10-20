@@ -1,4 +1,4 @@
-expat
+expat make
 flex  make
-libffi
+libffi make
 meson make
