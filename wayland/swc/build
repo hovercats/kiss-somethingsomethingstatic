@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+: "
+patch -p1 < restacking.patch
+patch -p1 < popup.patch
+patch -p1 < subsurface.patch
+patch -p1 < defer.patch
+"
+
+make
+make PREFIX=/usr DESTDIR="$1" install

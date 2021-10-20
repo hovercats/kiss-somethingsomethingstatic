@@ -1,0 +1,5 @@
+git+git://git.nihaljere.xyz/swc@desktop
+files/restacking.patch
+files/popup.patch
+files/subsurface.patch
+files/defer.patch

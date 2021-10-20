@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+export LDFLAGS="$LDFLAGS --static"
+
+./configure \
+	--prefix=/usr \
+	--enable-static \
+  --disable-dtd-validation \
+	--disable-documentation \
+  --disable-shared
+
+make
+make install 

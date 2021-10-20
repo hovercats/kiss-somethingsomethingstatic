@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+sed -i "s/Terminus/Noto Sans Mono/" clients/status_bar.c
+
+make PREFIX=/usr
+make PREFIX=/usr DESTDIR="$1" install
