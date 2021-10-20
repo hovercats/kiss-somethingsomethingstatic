@@ -10,4 +10,4 @@ mk() {
 }
 
 mk
-mk DESTDIR="$1" install
+mk install
