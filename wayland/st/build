@@ -1,4 +1,10 @@
 #!/bin/sh -e
 
 make
-make install
+
+mkdir -p \
+    "$1/usr/bin/" \
+    "$1/usr/share/man/man1"
+
+cp st "$1/usr/bin"
+cp st.1 "$1/usr/share/man/man1"
