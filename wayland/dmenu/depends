@@ -1,0 +1,7 @@
+fontconfig
+freetype-harfbuzz make
+expat make
+libpng make
+libxkbcommon make
+wayland
+wld
