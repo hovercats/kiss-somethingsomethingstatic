@@ -1,0 +1,3 @@
+#!/bin/sh -e 
+
+make LDFLAGS="$LDFLAGS -static" install
