@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+export LDFLAGS="$LDFLAGS -static"
+
 patch -p1 < evdev-wrap.patch
 
 for pkg in mtdev evdev; do (
@@ -11,7 +13,7 @@ for pkg in mtdev evdev; do (
         --disable-gcov
 
     make
-    make DESTDIR="$OLDPWD" install
+    make install
 ) done
 
 # Build fails with clang due to -Werror (forced on) and
@@ -22,7 +24,6 @@ export CFLAGS="-Wno-unused-command-line-argument $CFLAGS"
 export PKG_CONFIG_PATH="$PWD/usr/lib/pkgconfig"
 export CFLAGS="$CFLAGS -I$PWD/usr/include -L$PWD/usr/lib"
 export CFLAGS="$CFLAGS -I$PWD/usr/include/libevdev-1.0"
-export LDFLAGS="$LDFLAGS -static"
 
 sed -i 's/shared_library/library/' meson.build
 
