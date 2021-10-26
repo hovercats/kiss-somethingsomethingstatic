@@ -1,12 +1,12 @@
 #!/bin/sh -e
 
-export LDFLAGS="$LDFLAGS -static"
+#export LDFLAGS="$LDFLAGS -static"
 
 mk() {
     make \
         PREFIX=/usr \
         ENABLE_DEBUG=0 \
-        ENABLE_SHARED=0 \
+        ENABLE_SHARED=1 \
         ENABLE_XWAYLAND=0 \
         "$@"
 }

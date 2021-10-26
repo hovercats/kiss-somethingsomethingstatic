@@ -2,9 +2,9 @@
 
 ./configure \
     --prefix=/usr \
-    --disable-shared \
+#    --disable-shared \
     --without-examples \
     --without-tests 
 
-make LDFLAGS="$LDFLAGS --static"
-make DESTDIR="$1" install
+make #LDFLAGS="$LDFLAGS --static"
+make install

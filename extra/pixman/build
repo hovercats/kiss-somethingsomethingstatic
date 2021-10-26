@@ -3,7 +3,7 @@
 ./configure \
     --prefix=/usr \
     --disable-gtk \
-    --disable-shared
+#    --disable-shared
 
 make
 make install
