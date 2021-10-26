@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+export DESTDIR="$1"
+export LDFLAGS="$LDFLAGS -static"
+
+meson \
+    --prefix=/usr \
+    --libexecdir=/usr/lib \
+    -Ddefault_library=static \
+    -Denable-docs=false \
+    -Denable-xkbregistry=false \
+    -Denable-x11=false \
+    -Denable-wayland=true \
+    . output
+
+# force link to libffi.a instead of .so, else the build will fail
+sed -i 's/libffi.so/libffi.a/g' output/build.ninja
+
+ninja -C output
+ninja -C output install

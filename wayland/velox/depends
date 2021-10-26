@@ -1,0 +1,9 @@
+fontconfig make
+libffi make
+libpng make
+linux-headers     make
+pixman make
+swc
+wayland
+wayland-protocols make
+wld

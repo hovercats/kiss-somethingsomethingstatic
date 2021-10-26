@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+export LDFLAGS="$LDFLAGS --static -L/usr/lib  /usr/lib/libfontconfig.a  \
+	-lfreetype /usr/lib/libxml2.a /usr/lib/libwld.a /usr/lib/libpixman-1.a \
+	-lswc -lexpat -ldrm"
+
+make
+
+mkdir -p \
+    "$1/usr/bin" \
+    "$1/usr/share/man/man1"
+
+cp st-wl "$1/usr/bin/st"
+cp st-wl.1 "$1/usr/share/man/man1/st.1"
