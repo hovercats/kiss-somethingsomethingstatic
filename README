@@ -7,7 +7,9 @@ Kiss-somethingsomethingstatic
 ________________________________________________________________________________
 
 An experimental KISS repository with goal of providing a fully working
-statically linked enviroment. All packages in this repo is built statically.
+statically linked enviroment. All packages in this repo is built statically (Im
+lying here. this is the goal, but its not currently true. See issues for more
+info about this.).
 We also aim to use alternative more minimalistic tools, whenever such options
 are viable, and not without too much hassles.
 
