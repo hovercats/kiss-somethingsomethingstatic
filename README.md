@@ -2,9 +2,9 @@
 ---
 
 An experimental KISS repository with goal of providing a fully working
-statically linked enviroment. All packages in this repo is built statically (Im
-lying here. this is the goal, but its not currently true. See issues for more
-info about this.).
+statically linked enviroment.
+All packages in this repo *should* build statically. (This is however not always
+the case, please refer to issues on more info on this.)
 We also aim to use alternative more minimalistic tools, whenever such options
 are viable, and not without too much hassles.
 
@@ -33,4 +33,7 @@ Lets have a few examples:
     - because git depends on libcurl.so
     - building git first, then curl, will however work.
   - for gcc, building binutils first, will break gcc.
-    - same applies as above; gcc first, -> binutils -> ...
+    - same applies as above; gcc first, -> binutils -> $deps
+
+Its also good to have prebuilt binaries backed up, aswell as a untared tarball
+available, to save your ass **when** you break your system.
