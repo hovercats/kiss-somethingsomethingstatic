@@ -1,10 +1,5 @@
-|/
-|\ISS Repo                                                 https://kisslinux.org
-________________________________________________________________________________
-
-
-Kiss-somethingsomethingstatic
-________________________________________________________________________________
+# Kiss-somethingsomethingstatic
+---
 
 An experimental KISS repository with goal of providing a fully working
 statically linked enviroment. All packages in this repo is built statically (Im
@@ -14,16 +9,16 @@ We also aim to use alternative more minimalistic tools, whenever such options
 are viable, and not without too much hassles.
 
 
-Overview
-________________________________________________________________________________
+####Overview
+---
 
 This is a highly experimental repo, and should be treated as such. It should
 therefor not be considered a viable option for daily use. 
 Unless your needs are so small it does not exceed the useage of TTY that is.
 
 
-Converting
-________________________________________________________________________________
+####Converting
+---
 
 Converting to a static system, is rather trivial, if things are configured
 correctly, aswell as vital parts are not built in the wrong order.
