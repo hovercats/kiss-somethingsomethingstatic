@@ -8,14 +8,29 @@ the case, please refer to issues on more info on this.)
 We also aim to use alternative more minimalistic tools, whenever such options
 are viable, and not without too much hassles.
 
-
-####Overview
+#### Overview
 ---
 
-This is a highly experimental repo, and should be treated as such. It should
-therefor not be considered a viable option for daily use. 
-Unless your needs are so small it does not exceed the useage of TTY that is.
+Seeing as this is a highly experimental repo, it may not be adviceable to use
+this as your main repo, as its lacking alot of stuff, unless your needs are
+particurarly small. 
+We have a working GUI, with Velox, stolen from Oasislinux. However, I havent for
+some reason been able to build it statically (ironically). See issues for more
+info on this, aswell as other issues that needs to be resolved.
 
+We have no mesa, because Velox does not need it. I will also try to keep it that
+way for now. However, if you want/need mesa, you are on your own.
+
+Currently, musl builds libc.so, due to some issues. 
+Libc.so is also needed if support for shared libs is needed, else the build will
+fail, and complain about libc.so is missing. 
+Once said issues are considered resolved, musl will no longer build libc.so, and
+its up to the user to choose to build libc.so if you wish to do so.
+
+If some software appears to not be packaged in this repo, you are urged to
+package it yourself, similarly to vanilla KISS.
+This way, the repo will be kept small, and not be too much work to maintain all
+the packages available.
 
 ####Converting
 ---
