@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+mkdir -p \
+    "$1/usr/include" \
+    "$1/usr/lib"
+
+mv -f Makefile build/generic
+
+cd build/generic
+
+./configure \
+    --prefix=/usr 
+
+make
+
+cp -r ./\=build/libxvidcore.a "$1/usr/lib"
+cp -r ../../src/xvid.h "$1/usr/include"
