@@ -1,5 +1,4 @@
 libudev-zero
-libevdev 
 linux-headers make
 meson         make
 pkgconf       make
