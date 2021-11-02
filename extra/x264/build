@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+export LDFLAGS="$LDFLAGS -static"
+
+patch -p1 < portability.patch
+
+./configure \
+    --prefix=/usr \
+    --disable-swscale \
+    --enable-static \
+    --enable-pic
+
+make
+make install
