@@ -7,8 +7,7 @@ patch -p1 < portability.patch
 ./configure \
     --prefix=/usr \
     --disable-swscale \
-    --enable-static \
-    --enable-pic
+    --enable-static 
 
 make
 make install
