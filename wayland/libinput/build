@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 export DESTDIR="$1"
-export CFLAGS="$CFLAGS -I$1/usr/include"
+export CFLAGS="$CFLAGS -fPIC -I$1/usr/include"
 export CFLAGS="$CFLAGS -I$1/usr/include/libevdev-1.0"
 export PKG_CONFIG_PATH="$1/usr/lib/pkgconfig"
 export LDFLAGS="-L$1/usr/lib --static"
