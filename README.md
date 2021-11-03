@@ -21,16 +21,16 @@ info on this, aswell as other issues that needs to be resolved.
 We have no mesa, because Velox does not need it. I will also try to keep it that
 way for now. However, if you want/need mesa, you are on your own.
 
-Currently, musl builds libc.so, due to some issues. 
-Libc.so is also needed if support for shared libs is needed, else the build will
-fail, and complain about libc.so is missing. 
-Once said issues are considered resolved, musl will no longer build libc.so, and
-its up to the user to choose to build libc.so if you wish to do so.
+Currently, `musl` builds `libc.so`, due to some issues, and for compability reasons.
+Once said issues are considered resolved, `musl` will no longer build `libc.so`,
+and its from then up to the user to decide wether you need/want `libc.so` or not.
+Having a `libc.so` will give you the benefit of compability for shared libs.
 
-If some software appears to not be packaged in this repo, you are urged to
-package it yourself, similarly to vanilla KISS.
-This way, the repo will be kept small, and not be too much work to maintain all
-the packages available.
+If a package you require is missing, you are initially urged to package them
+yourself, however, theres nothing stopping you from creating an issue/PR, and we
+might add it to the repo.
+However, we wish to keep the repository small, so the work of maintaining it,
+wont be too much work.
 
 ####Converting
 ---
