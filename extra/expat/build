@@ -2,9 +2,9 @@
 
 ./configure \
     --prefix=/usr \
-#    --disable-shared \
     --without-examples \
-    --without-tests 
+    --without-tests \
+#    --disable-shared 
 
 make #LDFLAGS="$LDFLAGS --static"
 make install
