@@ -1,6 +1,10 @@
 #!/bin/sh -e
 
-export LDFLAGS="$LDFLAGS -static"
+export DESTDIR="$1"
+export CFLAGS="$CFLAGS -I$1/usr/include"
+export CFLAGS="$CFLAGS -I$1/usr/include/libevdev-1.0"
+export PKG_CONFIG_PATH="$1/usr/lib/pkgconfig"
+export LDFLAGS="-L$1/usr/lib --static"
 
 patch -p1 < evdev-wrap.patch
 
@@ -21,9 +25,6 @@ for pkg in mtdev evdev; do (
 # the below CFLAGS.
 export CFLAGS="-Wno-unused-command-line-argument $CFLAGS"
 
-export PKG_CONFIG_PATH="$PWD/usr/lib/pkgconfig"
-export CFLAGS="$CFLAGS -I$PWD/usr/include -L$PWD/usr/lib"
-export CFLAGS="$CFLAGS -I$PWD/usr/include/libevdev-1.0"
 
 sed -i 's/shared_library/library/' meson.build
 
