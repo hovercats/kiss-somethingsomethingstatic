@@ -15,8 +15,6 @@ build_freetype() (
         -Dpng=enabled \
         -Dzlib=disabled \
         -Dbzip2=disabled \
-        -Dglib=disabled \
-        -Dgobject=disabled \
         . build
         
 
