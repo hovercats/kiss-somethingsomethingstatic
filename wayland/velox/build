@@ -3,7 +3,7 @@
 make \
 	PREFIX=/usr \
 	ENABLE_DEBUG=0 \
-	LDFLAGS="$LDFLAGS --static"
+#	LDFLAGS="$LDFLAGS --static"
 
 make PREFIX=/usr \
 	ENABLE_DEBUG=0 \
