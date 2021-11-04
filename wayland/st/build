@@ -10,5 +10,5 @@ mkdir -p \
     "$1/usr/bin" \
     "$1/usr/share/man/man1"
 
-cp st-wl "$1/usr/bin/st"
-cp st-wl.1 "$1/usr/share/man/man1/st.1"
+cp st "$1/usr/bin"
+cp st.1 "$1/usr/share/man/man1"
