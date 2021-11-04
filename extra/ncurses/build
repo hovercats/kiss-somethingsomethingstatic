@@ -18,3 +18,6 @@ make install
 
 # Fix pkgconfig file.
 ln -s ncursesw.pc "$1/usr/lib/pkgconfig/ncurses.pc"
+
+# fix some packages complaining about missing curses libs
+ln -s libncursesw.a "$1/usr/lib/libncurses.a"
