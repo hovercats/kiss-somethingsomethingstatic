@@ -3,14 +3,15 @@ lame
 libass
 libdrm
 libogg
+libressl
 libvorbis
 libvpx
 libwebp
 linux-headers make
 nasm          make
-libressl
 opus
 pkgconf make
+sdl2
 x264
 x265
 xvidcore

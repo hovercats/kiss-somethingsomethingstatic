@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+export LDFLAGS="$LDFLAGS -static"
+
+patch -p1 < xkb-segfault.patch
+
+./configure \
+    --prefix=/usr \
+    --disable-shared 
+
+make
+make install

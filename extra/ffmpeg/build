@@ -20,6 +20,7 @@ export PKG_CONFIG_PATH="/usr/lib/pkgconf"
     --enable-libx265 \
     --enable-libxvid \
     --enable-nonfree \
+    --enable-ffplay \
     --enable-openssl \
     --enable-version3 \
     --x86asmexe=nasm \
