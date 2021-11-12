@@ -18,7 +18,8 @@
     --without-libidn2 \
     --without-zstd \
     --without-zlib \
-    --disable-shared
+    --disable-shared \
+    --without-brotli
 
 make LDFLAGS=--static
 make install
