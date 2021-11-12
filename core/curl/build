@@ -9,7 +9,7 @@
     --disable-ldap \
     --disable-ares \
     --with-openssl \
-    --with-pic \
+    --without-pic \
     --with-ca-fallback \
     --without-librtmp \
     --without-icu \
