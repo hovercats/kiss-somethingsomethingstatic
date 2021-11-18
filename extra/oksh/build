@@ -6,7 +6,8 @@
     --bindir=/usr/bin \
     --mandir=/usr/share/man \
     --enable-ksh \
-    --enable-sh
+    --enable-sh \
+    --disable-curses
 
 make LDFLAGS="$LDFLAGS -static"
 make DESTDIR="$1" install
