@@ -4,7 +4,7 @@
     --prefix=/usr \
     --without-examples \
     --without-tests \
-#    --disable-shared 
+    --disable-shared 
 
-make #LDFLAGS="$LDFLAGS --static"
+make LDFLAGS="$LDFLAGS --static"
 make install
