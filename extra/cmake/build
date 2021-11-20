@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+export LDFLAGS="$LDFLAGS -static-pie -s"
+export CFLAGS="$CFLAGS -fPIE"
+
 patch -p1 < cmake-no-execinfo.patch
 
 # should no longer complain about libs
@@ -8,11 +11,9 @@ sed -i 's,curses_version,baudrate,'   \
 sed -i 's,defined(HAVE_LIBCRYPTO),0,' \
     Utilities/cmlibarchive/libarchive/archive_hmac.c
 
+
 if kiss l cmake; then
 
-# We cant pass -static flag globally, else Cmake will fail to build when cmake
-# isnt installed
-export LDFLAGS="$LDFLAGS -static"
 
     cmake -B build \
         -DCMAKE_INSTALL_PREFIX=/usr \
@@ -28,7 +29,6 @@ export LDFLAGS="$LDFLAGS -static"
 
 else
 
-# Build Cmake non-static first
     ./configure \
         --prefix=/usr \
         --no-system-curl \
@@ -38,24 +38,6 @@ else
 
     make
     make install
-
-# export path to our newly built cmake, so we can build it statically, without
-# having to manually build it again.
-export DESTIDR="$1"
-export PATH="$1/usr/bin:$PATH"
-export LDFLAGS="$LDFLAGS -static"
-
-    cmake -B build \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_USE_SYSTEM_CURL=False \
-        -DCMAKE_USE_SYSTEM_EXPAT=True \
-        -DCMAKE_USE_SYSTEM_ZLIB=True \
-        -DCMAKE_USE_SYSTEM_BZIP2=True \
-        -DBUILD_TESTING=OFF
-
-    cmake --build   build
-    cmake --install build
 
 fi
 
