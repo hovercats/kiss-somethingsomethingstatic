@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+# fix scrolling so it scrolls 3 lines instead of whole screen.
+sed -i 's/-1/3/g' config.def.h
 
 make LDFLAGS="$LDFLAGS -static"
 make PREFIX=/usr install
