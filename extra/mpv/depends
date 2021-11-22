@@ -1,0 +1,10 @@
+ffmpeg
+freetype-harfbuzz
+libass
+libxkbcommon
+linux-headers make
+pkgconf make
+python  make
+sdl2
+wayland
+wayland-protocols make
