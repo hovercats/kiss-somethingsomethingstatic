@@ -21,10 +21,9 @@ python waf/waf configure \
     --prefix=/usr \
     --mandir=/usr/share/man \
     --confdir=/etc/mpv \
-    --disable-alsa \
+    --enable-alsa \
     --enable-wayland \
     --enable-wayland-scanner \
-    --enable-static-build \
     --disable-x11 \
     --disable-gl \
     --disable-egl \
