@@ -12,6 +12,5 @@ nasm          make
 opus
 pkgconf make
 sdl2
-x264
 x265
 xvidcore
