@@ -2,5 +2,4 @@ bzip2 make
 expat make
 libressl make
 linux-headers make
-ncurses make
 zlib make
