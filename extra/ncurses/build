@@ -6,14 +6,14 @@
     --enable-pc-files \
     --disable-rpath-hack \
     --with-pkg-config-libdir=/usr/lib/pkgconfig \
+    --with-shared \
     --enable-widec \
     --without-ada \
     --without-tests \
     --without-debug \
     --without-cxx-binding \
-    --without-shared
 
-make LDFLAGS="$LDFLAGS -static"
+make 
 make install
 
 # Fix pkgconfig file.
@@ -21,3 +21,15 @@ ln -s ncursesw.pc "$1/usr/lib/pkgconfig/ncurses.pc"
 
 # fix some packages complaining about missing curses libs
 ln -s libncursesw.a "$1/usr/lib/libncurses.a"
+
+# Force ncurses to link against wide-character ncurses library.
+for lib in ncurses form panel menu; do
+    rm -f "$1/usr/lib/lib${lib}.so"
+    printf '%s\n' "INPUT(-l${lib}w)" > "$1/usr/lib/lib${lib}.so"
+    chmod 755 "$1/usr/lib/lib${lib}.so"
+    ln -sf "lib${lib}w.a" "$1/usr/lib/lib${lib}.a"
+done
+
+# Some packages look for libcurses instead of libncurses when building.
+printf '%s\n' "INPUT(-lncursesw)" > "$1/usr/lib/libcursesw.so"
+ln -s libncurses.so "$1/usr/lib/libcurses.so"
