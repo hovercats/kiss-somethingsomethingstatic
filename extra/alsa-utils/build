@@ -3,11 +3,12 @@
 
 #export LDFLAGS="$LDFLAGS -static"
 
+# This is for when/if we choose to use netbsd-curses
 # Fix alsamixer for netbsd-curses
-sed -e 's/ MIN_MENU_COMMAND/REQ_LEFT_ITEM/' \
-    -e 's/ MAX_MENU_COMMAND/REQ_PREV_MATCH/' \
-    alsamixer/bindings.h > _
-mv -f _ alsamixer/bindings.h
+#sed -e 's/ MIN_MENU_COMMAND/REQ_LEFT_ITEM/' \
+#    -e 's/ MAX_MENU_COMMAND/REQ_PREV_MATCH/' \
+#    alsamixer/bindings.h > _
+#mv -f _ alsamixer/bindings.h
 
 # Makefile fix
 sed '/\$(edit)\|\.\(service\|rules\)/d' alsactl/Makefile.in > _
