@@ -1,10 +1,5 @@
 #!/usr/bin/sh -e
 
-patch -p1 < musl.patch
-
-# should use CC instead of gcc, which may prohibit building with llvm
-sed -i 's/gcc/cc/' Makefile
-
 make CFLAGS="-DNCURSESW_INCLUDE_H=\<curses.h\> $CFLAGS --static" 
 
 mkdir -p \
