@@ -7,6 +7,7 @@
     --without-debug 
 
 make
+make install
 
 ./configure \
     --prefix=/usr \
