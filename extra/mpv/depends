@@ -1,10 +1,11 @@
+alsa-lib
 ffmpeg
-freetype-harfbuzz
-libass
-libxkbcommon
+freetype-harfbuzz make
+libass make
+libxkbcommon make
 linux-headers make
 pkgconf make
 python  make
-sdl2
+sdl2 make
 wayland
 wayland-protocols make
