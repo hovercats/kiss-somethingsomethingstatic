@@ -1,8 +1,18 @@
 #!/bin/sh -e
 
+# For some reason, we need to build once first, else itll fail and complaing
+# about an undefined reference to _sdn_module_control_empty.
 ./configure \
     --prefix=/usr \
     --without-debug 
 
 make
+
+./configure \
+    --prefix=/usr \
+    --without-debug \
+    --disable-shared \
+    --enable-static
+
+make LDFLAGS="$LDFLAGS --static"
 make install
