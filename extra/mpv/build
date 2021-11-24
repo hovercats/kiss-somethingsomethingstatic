@@ -28,7 +28,8 @@ python waf/waf configure \
     --disable-gl \
     --disable-egl \
     --disable-drm \
-    --enable-sdl2
+    --enable-static-build \
+    --enable-sdl2 
 
 python waf/waf build
 python waf/waf install --destdir="$1"
