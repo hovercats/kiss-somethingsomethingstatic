@@ -6,6 +6,7 @@ build_freetype() (
     meson \
         --prefix=/usr \
         -Ddefault_library=static \
+        -Dpng=enabled \
         -Dbzip2=disabled \
         -Dzlib=disabled \
         "$@" \
