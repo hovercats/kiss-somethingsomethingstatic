@@ -10,7 +10,7 @@ SWCPROTO = /usr/share/swc/swc.xml
 
 # includes and libs
 INCS = -I${PIXMANINC}
-LIBS = -lwayland-client -lxkbcommon -lwld -lfontconfig -lffi -lpixman-1 -lfreetype -lpng -lxml2 -lz -lwld -ldrm -lexpat -llzma
+LIBS =  /usr/lib/*.a -lwayland-client -lxkbcommon -lwld -lfontconfig -lffi -lpixman-1 -lfreetype -lpng -lxml2 -lz -lwld -ldrm -lexpat -llzma
 
 # flags
 CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700 -D_POSIX_C_SOURCE=200809L -DVERSION=\"${VERSION}\"
