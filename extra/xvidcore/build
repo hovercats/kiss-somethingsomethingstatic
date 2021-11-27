@@ -13,5 +13,5 @@ cd build/generic
 
 make
 
-cp -r ./\=build/libxvidcore.a "$1/usr/lib"
+cp -r ./=build/libxvidcore.a "$1/usr/lib"
 cp -r ../../src/xvid.h "$1/usr/include"
