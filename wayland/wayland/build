@@ -3,9 +3,12 @@
 export DESTDIR="$1"
 export LDFLAGS="$LDFLAGS -static"
 
-sed -i "s/expat'/expat', static: true/" meson.build
-sed -i "s/ffi'/ffi', static: true/"     meson.build
-sed -i "s/subdir('tests')//"            meson.build
+sed "s/expat'/expat', static: true/" meson.build > _
+mv -f _ meson.build
+sed "s/ffi'/ffi', static: true/"     meson.build > _
+mv -f _ meson.build
+sed "s/subdir('tests')//"            meson.build > _
+mv -f _ meson.build
 
 meson \
     --prefix=/usr \
