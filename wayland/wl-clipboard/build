@@ -12,8 +12,10 @@ meson \
 
 # force static lib, and force remove the use of PIC, which is unsupported by
 # static building.
-sed -i 's/libffi.so/libffi.a/g' output/build.ninja
-sed -i 's/-fPIC //g' output/build.ninja
+sed 's/libffi.so/libffi.a/g' output/build.ninja > _
+mv -f _ output/build.ninja
+sed 's/-fPIC //g' output/build.ninja > _
+mv -f _ output/build.ninja
 
 ninja -C output
 ninja -C output install
