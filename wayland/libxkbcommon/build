@@ -14,7 +14,8 @@ meson \
     . output
 
 # force link to libffi.a instead of .so, else the build will fail
-sed -i 's/libffi.so/libffi.a/g' output/build.ninja
+sed 's/libffi.so/libffi.a/g' output/build.ninja > _
+mv -f _ output/build.ninja
 
 ninja -C output
 ninja -C output install
