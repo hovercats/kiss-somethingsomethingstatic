@@ -1,6 +1,4 @@
 #!/bin/sh -e
 
-sed -i 's/monospace:size=10/monospace:size=12/' config.def.h
-
 make
 make PREFIX=/usr install
