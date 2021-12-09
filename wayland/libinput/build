@@ -26,7 +26,8 @@ for pkg in mtdev evdev; do (
 export CFLAGS="-Wno-unused-command-line-argument $CFLAGS"
 
 
-sed -i 's/shared_library/library/' meson.build
+sed 's/shared_library/library/' meson.build > _
+mv -f _ meson.build
 
 meson \
     --prefix=/usr \
