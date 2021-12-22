@@ -1,3 +1,2 @@
-libpng make
 meson   make
 pkgconf make
