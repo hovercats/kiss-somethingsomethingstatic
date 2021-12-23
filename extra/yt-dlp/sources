@@ -1,0 +1,3 @@
+https://github.com/yt-dlp/yt-dlp/archive/refs/tags/VERSION.tar.gz
+patches/0001-Disable-use-of-ctypes-and-dynamic-loading.patch
+files/youtube-dl

@@ -1,51 +1,40 @@
-From cf0a9b0dc925e174805118977e74588086816835 Mon Sep 17 00:00:00 2001
+From 52d1ea4b111432f7a8c3e14f06b4fc2431fe6a5b Mon Sep 17 00:00:00 2001
 From: Michael Forney <mforney@mforney.org>
 Date: Mon, 4 Jul 2016 16:14:18 -0700
 Subject: [PATCH] Disable use of ctypes and dynamic loading
 
 ---
- youtube_dl/compat.py |  20 -----
- youtube_dl/utils.py  | 181 +++----------------------------------------
- 2 files changed, 11 insertions(+), 190 deletions(-)
+ yt_dlp/compat.py  |   8 ---
+ yt_dlp/cookies.py |  69 --------------------
+ yt_dlp/utils.py   | 161 +---------------------------------------------
+ 3 files changed, 1 insertion(+), 237 deletions(-)
 
-diff --git a/youtube_dl/compat.py b/youtube_dl/compat.py
-index 9e45c454b..de474135b 100644
---- a/youtube_dl/compat.py
-+++ b/youtube_dl/compat.py
-@@ -4,7 +4,6 @@ from __future__ import unicode_literals
+diff --git a/yt_dlp/compat.py b/yt_dlp/compat.py
+index 79c8e3494..28f3b065b 100644
+--- a/yt_dlp/compat.py
++++ b/yt_dlp/compat.py
+@@ -2,7 +2,6 @@
+ 
+ import asyncio
  import base64
- import binascii
- import collections
 -import ctypes
- import email
  import getpass
- import io
-@@ -2980,24 +2979,6 @@ else:
-     compat_b64decode = base64.b64decode
+ import html
+ import html.parser
+@@ -34,12 +33,6 @@ class compat_HTMLParseError(Exception):
+     pass
  
  
--if platform.python_implementation() == 'PyPy' and sys.pypy_version_info < (5, 4, 0):
--    # PyPy2 prior to version 5.4.0 expects byte strings as Windows function
--    # names, see the original PyPy issue [1] and the youtube-dl one [2].
--    # 1. https://bitbucket.org/pypy/pypy/issues/2360/windows-ctypescdll-typeerror-function-name
--    # 2. https://github.com/ytdl-org/youtube-dl/pull/4392
--    def compat_ctypes_WINFUNCTYPE(*args, **kwargs):
--        real = ctypes.WINFUNCTYPE(*args, **kwargs)
--
--        def resf(tpl, *args, **kwargs):
--            funcname, dll = tpl
--            return real((str(funcname), dll), *args, **kwargs)
--
--        return resf
--else:
--    def compat_ctypes_WINFUNCTYPE(*args, **kwargs):
--        return ctypes.WINFUNCTYPE(*args, **kwargs)
+-# compat_ctypes_WINFUNCTYPE = ctypes.WINFUNCTYPE
+-# will not work since ctypes.WINFUNCTYPE does not exist in UNIX machines
+-def compat_ctypes_WINFUNCTYPE(*args, **kwargs):
+-    return ctypes.WINFUNCTYPE(*args, **kwargs)
 -
 -
- __all__ = [
-     'compat_HTMLParseError',
-     'compat_HTMLParser',
-@@ -3010,7 +2991,6 @@ __all__ = [
+ class _TreeBuilder(etree.TreeBuilder):
+     def doctype(self, name, pubid, system):
+         pass
+@@ -249,7 +242,6 @@ __all__ = [
      'compat_cookiejar_Cookie',
      'compat_cookies',
      'compat_cookies_SimpleCookie',
@@ -53,10 +42,108 @@ index 9e45c454b..de474135b 100644
      'compat_etree_Element',
      'compat_etree_fromstring',
      'compat_etree_register_namespace',
-diff --git a/youtube_dl/utils.py b/youtube_dl/utils.py
-index e722eed58..3364352fa 100644
---- a/youtube_dl/utils.py
-+++ b/youtube_dl/utils.py
+diff --git a/yt_dlp/cookies.py b/yt_dlp/cookies.py
+index ec68a809d..0ea322074 100644
+--- a/yt_dlp/cookies.py
++++ b/yt_dlp/cookies.py
+@@ -1,4 +1,3 @@
+-import ctypes
+ import json
+ import os
+ import shutil
+@@ -311,8 +310,6 @@ def get_cookie_decryptor(browser_root, browser_keyring_name, logger):
+         return LinuxChromeCookieDecryptor(browser_keyring_name, logger)
+     elif sys.platform == 'darwin':
+         return MacChromeCookieDecryptor(browser_keyring_name, logger)
+-    elif sys.platform == 'win32':
+-        return WindowsChromeCookieDecryptor(browser_root, logger)
+     else:
+         raise NotImplementedError('Chrome cookie decryption is not supported '
+                                   'on this platform: {}'.format(sys.platform))
+@@ -379,40 +376,6 @@ class MacChromeCookieDecryptor(ChromeCookieDecryptor):
+             return encrypted_value
+ 
+ 
+-class WindowsChromeCookieDecryptor(ChromeCookieDecryptor):
+-    def __init__(self, browser_root, logger):
+-        self._logger = logger
+-        self._v10_key = _get_windows_v10_key(browser_root, logger)
+-
+-    def decrypt(self, encrypted_value):
+-        version = encrypted_value[:3]
+-        ciphertext = encrypted_value[3:]
+-
+-        if version == b'v10':
+-            if self._v10_key is None:
+-                self._logger.warning('cannot decrypt v10 cookies: no key found', only_once=True)
+-                return None
+-
+-            # https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/os_crypt/os_crypt_win.cc
+-            #   kNonceLength
+-            nonce_length = 96 // 8
+-            # boringssl
+-            #   EVP_AEAD_AES_GCM_TAG_LEN
+-            authentication_tag_length = 16
+-
+-            raw_ciphertext = ciphertext
+-            nonce = raw_ciphertext[:nonce_length]
+-            ciphertext = raw_ciphertext[nonce_length:-authentication_tag_length]
+-            authentication_tag = raw_ciphertext[-authentication_tag_length:]
+-
+-            return _decrypt_aes_gcm(ciphertext, self._v10_key, nonce, authentication_tag, self._logger)
+-
+-        else:
+-            # any other prefix means the data is DPAPI encrypted
+-            # https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/os_crypt/os_crypt_win.cc
+-            return _decrypt_windows_dpapi(encrypted_value, self._logger).decode('utf-8')
+-
+-
+ def _extract_safari_cookies(profile, logger):
+     if profile is not None:
+         logger.error('safari does not support profiles')
+@@ -663,38 +626,6 @@ def _decrypt_aes_gcm(ciphertext, key, nonce, authentication_tag, logger):
+         return None
+ 
+ 
+-def _decrypt_windows_dpapi(ciphertext, logger):
+-    """
+-    References:
+-        - https://docs.microsoft.com/en-us/windows/win32/api/dpapi/nf-dpapi-cryptunprotectdata
+-    """
+-    from ctypes.wintypes import DWORD
+-
+-    class DATA_BLOB(ctypes.Structure):
+-        _fields_ = [('cbData', DWORD),
+-                    ('pbData', ctypes.POINTER(ctypes.c_char))]
+-
+-    buffer = ctypes.create_string_buffer(ciphertext)
+-    blob_in = DATA_BLOB(ctypes.sizeof(buffer), buffer)
+-    blob_out = DATA_BLOB()
+-    ret = ctypes.windll.crypt32.CryptUnprotectData(
+-        ctypes.byref(blob_in),  # pDataIn
+-        None,  # ppszDataDescr: human readable description of pDataIn
+-        None,  # pOptionalEntropy: salt?
+-        None,  # pvReserved: must be NULL
+-        None,  # pPromptStruct: information about prompts to display
+-        0,  # dwFlags
+-        ctypes.byref(blob_out)  # pDataOut
+-    )
+-    if not ret:
+-        logger.warning('failed to decrypt with DPAPI', only_once=True)
+-        return None
+-
+-    result = ctypes.string_at(blob_out.pbData, blob_out.cbData)
+-    ctypes.windll.kernel32.LocalFree(blob_out.pbData)
+-    return result
+-
+-
+ def _config_home():
+     return os.environ.get('XDG_CONFIG_HOME', os.path.expanduser('~/.config'))
+ 
+diff --git a/yt_dlp/utils.py b/yt_dlp/utils.py
+index 81c95f3e9..34b2eab51 100644
+--- a/yt_dlp/utils.py
++++ b/yt_dlp/utils.py
 @@ -9,7 +9,6 @@ import calendar
  import codecs
  import collections
@@ -65,7 +152,7 @@ index e722eed58..3364352fa 100644
  import datetime
  import email.utils
  import email.header
-@@ -43,7 +42,6 @@ from .compat import (
+@@ -47,7 +46,6 @@ from .compat import (
      compat_basestring,
      compat_chr,
      compat_cookiejar,
@@ -73,8 +160,8 @@ index e722eed58..3364352fa 100644
      compat_etree_fromstring,
      compat_expanduser,
      compat_html_entities,
-@@ -3135,90 +3133,11 @@ def platform_name():
-     return res
+@@ -1857,90 +1855,11 @@ def get_windows_version():
+         return None
  
  
 -def _windows_write_string(s, out):
@@ -164,10 +251,11 @@ index e722eed58..3364352fa 100644
      if ('b' in getattr(out, 'mode', '')
              or sys.version_info[0] < 3):  # Python 2 lies about mode of sys.stderr
          byt = s.encode(encoding or preferredencoding(), 'ignore')
-@@ -3248,78 +3167,22 @@ def intlist_to_bytes(xs):
+@@ -1969,62 +1888,6 @@ def intlist_to_bytes(xs):
+     return compat_struct_pack('%dB' % len(xs), *xs)
  
  
- # Cross-platform file locking
+-# Cross-platform file locking
 -if sys.platform == 'win32':
 -    import ctypes.wintypes
 -    import msvcrt
@@ -203,10 +291,8 @@ index e722eed58..3364352fa 100644
 -    UnlockFileEx.restype = ctypes.wintypes.BOOL
 -    whole_low = 0xffffffff
 -    whole_high = 0x7fffffff
-+try:
-+    import fcntl
- 
-     def _lock_file(f, exclusive):
+-
+-    def _lock_file(f, exclusive):
 -        overlapped = OVERLAPPED()
 -        overlapped.Offset = 0
 -        overlapped.OffsetHigh = 0
@@ -216,44 +302,19 @@ index e722eed58..3364352fa 100644
 -        if not LockFileEx(handle, 0x2 if exclusive else 0x0, 0,
 -                          whole_low, whole_high, f._lock_file_overlapped_p):
 -            raise OSError('Locking file failed: %r' % ctypes.FormatError())
-+        fcntl.flock(f, fcntl.LOCK_EX if exclusive else fcntl.LOCK_SH)
- 
-     def _unlock_file(f):
+-
+-    def _unlock_file(f):
 -        assert f._lock_file_overlapped_p
 -        handle = msvcrt.get_osfhandle(f.fileno())
 -        if not UnlockFileEx(handle, 0,
 -                            whole_low, whole_high, f._lock_file_overlapped_p):
 -            raise OSError('Unlocking file failed: %r' % ctypes.FormatError())
-+        fcntl.flock(f, fcntl.LOCK_UN)
-+except ImportError:
-+    UNSUPPORTED_MSG = 'file locking is not supported on this platform'
- 
+-
 -else:
--    # Some platforms, such as Jython, is missing fcntl
--    try:
--        import fcntl
--
--        def _lock_file(f, exclusive):
--            fcntl.flock(f, fcntl.LOCK_EX if exclusive else fcntl.LOCK_SH)
--
--        def _unlock_file(f):
--            fcntl.flock(f, fcntl.LOCK_UN)
--    except ImportError:
--        UNSUPPORTED_MSG = 'file locking is not supported on this platform'
--
--        def _lock_file(f, exclusive):
--            raise IOError(UNSUPPORTED_MSG)
-+    def _lock_file(f, exclusive):
-+        raise IOError(UNSUPPORTED_MSG)
- 
--        def _unlock_file(f):
--            raise IOError(UNSUPPORTED_MSG)
-+    def _unlock_file(f):
-+        raise IOError(UNSUPPORTED_MSG)
- 
- 
- class locked_file(object):
-@@ -3565,29 +3428,7 @@ def fix_xml_ampersands(xml_str):
+     # Some platforms, such as Jython, is missing fcntl
+     try:
+         import fcntl
+@@ -2287,29 +2150,7 @@ def fix_xml_ampersands(xml_str):
  
  
  def setproctitle(title):
@@ -285,5 +346,5 @@ index e722eed58..3364352fa 100644
  
  def remove_start(s, start):
 -- 
-2.31.1
+2.34.0
 
