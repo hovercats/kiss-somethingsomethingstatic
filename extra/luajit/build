@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+export LDFLAGS="$LDFLAGS -static"
+
+make amalg   PREFIX=/usr BUILDMODE=static
+make install PREFIX=/usr 
