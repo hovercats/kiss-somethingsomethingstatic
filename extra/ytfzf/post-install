@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+cat <<EOF
+
+NOTE: A menu system has to be installed. Possible choices:
+
+- fzf
+- bemenu (external menu)
+
+To use an external menu, the variable YTFZF_EXTMENU has
+to be set. Example:
+
+export YTFZF_EXTMENU="bemenu -l 15"
+
+Optional: ueberzug can be installed with 'pip'
+to get thumbnails support.
+
+
+NOTE: if mpv fails to play the video, it needs to be
+rebuilt. 
+
+EOF
