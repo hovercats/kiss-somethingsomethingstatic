@@ -16,4 +16,4 @@ make install
 # creating this symlink however, seemed to fix it
 ln -s "$1/usr/lib/libcrypto.a" "$1/usr/lib/libcrypto.so.1.1"
 
-install -Dm 755 update-certdata.sh "$1/etc/ssl"
+cp -f update-certdata.sh "$1/etc/ssl"
