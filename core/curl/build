@@ -1,5 +1,31 @@
 #!/bin/sh -e
 
+# disable ipv6 if the user is using sdhcp
+if kiss l sdhcp; then
+
+./configure \
+    --prefix=/usr \
+    --disable-ipv6 \
+    --enable-unix-sockets \
+    --enable-hidden-symbols \
+    --disable-manual \
+    --disable-ldap \
+    --disable-ares \
+    --with-openssl \
+    --without-pic \
+    --with-ca-fallback \
+    --without-librtmp \
+    --without-icu \
+    --without-libpsl \
+    --without-libidn \
+    --without-libidn2 \
+    --without-zstd \
+    --without-zlib \
+    --disable-shared \
+    --without-brotli
+
+else
+
 ./configure \
     --prefix=/usr \
     --enable-ipv6 \
@@ -20,6 +46,7 @@
     --without-zlib \
     --disable-shared \
     --without-brotli
+fi
 
 make LDFLAGS=--static
 make install
