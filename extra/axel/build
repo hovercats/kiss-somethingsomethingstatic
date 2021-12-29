@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --disable-nls
+
+make LDFLAGS="$LDFLAGS --static"
+make install
