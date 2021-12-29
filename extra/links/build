@@ -2,6 +2,20 @@
 
 export LDFLAGS="$LDFLAGS  --static"
 
+# disable ipv6 if sdhcp is used instead of dhcpcd
+if kiss l sdhcp; then
+
+./configure \
+	--without-brotli \
+	--without-bzip2 \
+	--without-lzip \
+	--without-openmp \
+	--without-libevent \
+  --without-zstd \
+  --without-ipv6
+
+else
+
 ./configure \
 	--without-brotli \
 	--without-bzip2 \
@@ -9,6 +23,8 @@ export LDFLAGS="$LDFLAGS  --static"
 	--without-openmp \
 	--without-libevent \
   --without-zstd
+
+fi
 
 make 
 
