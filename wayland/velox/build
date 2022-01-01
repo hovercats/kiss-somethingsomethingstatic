@@ -10,4 +10,5 @@ make PREFIX=/usr \
 	ENABLE_DEBUG=0 \
 	install
 
+mkdir -p "$1/etc"
 cp -f velox.conf.sample "$1/etc/velox.conf"
