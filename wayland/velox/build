@@ -9,4 +9,4 @@ make PREFIX=/usr \
 	ENABLE_DEBUG=0 \
 	install
 
-install -Dm755 velox.conf.sample "$1/etc/velox.conf"
+cp -f velox.conf.sample "$1/etc/velox.conf"
