@@ -2,7 +2,7 @@
 
 ./configure \
     --prefix=/usr \
-#    --disable-shared
+    --disable-shared
 
 make
 make install
