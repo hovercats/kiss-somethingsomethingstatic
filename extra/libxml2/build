@@ -6,7 +6,7 @@
     --with-history \
     --without-python \
     --without-icu \
-#    --disable-shared
+    --disable-shared
 
-make #LDFLAGS="$LDFLAGS --static"
+make LDFLAGS="$LDFLAGS --static"
 make  install
