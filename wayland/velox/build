@@ -3,7 +3,8 @@
 make \
 	PREFIX=/usr \
 	ENABLE_DEBUG=0 \
-#	LDFLAGS="$LDFLAGS --static"
+	LDFLAGS="$LDFLAGS --static" \
+  PKG_CONFIG="pkg-config --static"
 
 make PREFIX=/usr \
 	ENABLE_DEBUG=0 \
