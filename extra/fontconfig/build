@@ -14,8 +14,7 @@ mv -f _ src/Makefile.in
     --enable-static \
     --disable-shared \
     --disable-docs \
-    --disable-nls \
-    --enable-libxml2
+    --disable-nls
 
-make LDFLAGS="$LDFLAGS -lpng -lxml2 --static"
+make LDFLAGS="$LDFLAGS --static"
 make install
