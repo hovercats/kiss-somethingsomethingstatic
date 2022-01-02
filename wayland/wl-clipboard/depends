@@ -1,4 +1,0 @@
-libffi make
-meson make
-wayland
-wayland-protocols make
