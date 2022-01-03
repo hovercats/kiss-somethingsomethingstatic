@@ -1,13 +1,12 @@
 #!/bin/sh -e
 
-# For some reason, we need to build once first, else itll fail and complaing
-# about an undefined reference to _sdn_module_control_empty.
-./configure \
-    --prefix=/usr \
-    --without-debug 
+# if alsa-lib fails and complains about a missing reference to
+# _sdn_module_control_empty, uncomment these
+#./configure \
+    #--prefix=/usr \
+    #--without-debug 
 
-make
-make install
+#make
 
 ./configure \
     --prefix=/usr \
