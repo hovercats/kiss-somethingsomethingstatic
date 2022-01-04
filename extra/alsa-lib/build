@@ -1,12 +1,15 @@
 #!/bin/sh -e
 
 # if alsa-lib fails and complains about a missing reference to
-# _sdn_module_control_empty, uncomment these
+# _sdn_module_control_empty, uncomment these.
+# also; see #6 about missing sound in mpv. so far it seems we need the
+# shared libs, if we want sound in mpv.
 #./configure \
     #--prefix=/usr \
     #--without-debug 
 
 #make
+#make install
 
 ./configure \
     --prefix=/usr \
