@@ -16,7 +16,6 @@ export PKG_CONFIG_PATH="/usr/lib/pkgconf"
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libwebp \
-    --enable-libx265 \
     --enable-libxvid \
     --disable-ffplay \
     --enable-nonfree \
