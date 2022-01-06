@@ -11,5 +11,4 @@ linux-headers make
 nasm          make
 opus
 pkgconf make
-sdl2
 xvidcore
