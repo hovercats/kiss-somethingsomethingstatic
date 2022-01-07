@@ -6,5 +6,6 @@ libxkbcommon make
 linux-headers make
 meson make
 pkgconf make
+python make 
 wayland
 wayland-protocols make
