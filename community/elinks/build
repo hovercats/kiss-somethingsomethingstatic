@@ -1,0 +1,44 @@
+#!/bin/sh -e
+
+# disable ipv6 if using sdhcp
+if kiss l sdhcp; then
+
+./configure \
+    --prefix=/usr \
+    --disable-nls \
+    --enable-small \
+    --disable-ipv6 \
+    --disable-backtrace \
+    --without-zlib \
+    --enable-fastmem \
+    --without-bzlib \
+    --without-gnutls \
+    --without-tre \
+    --without-lua \
+    --without-x \
+    --without-spidermonkey \
+    --without-gpm \
+    --without-xbel
+
+else
+
+./configure \
+    --prefix=/usr \
+    --disable-nls \
+    --disable-backtrace \
+    --without-zlib \
+    --enable-fastmem \
+    --without-bzlib \
+    --without-gnutls \
+    --without-tre \
+    --without-lua \
+    --without-x \
+    --without-spidermonkey \
+    --without-gpm \
+    --without-xbel \
+    --enable-small
+
+fi
+
+make LDFLAGS="$LDFLAGS -static"
+make DESTDIR=$1 install
