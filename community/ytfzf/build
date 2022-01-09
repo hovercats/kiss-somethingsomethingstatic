@@ -1,3 +1,8 @@
 #!/bin/sh -e
 
+# curl doesnt have this option, and when trying to start a video, curl will
+# error out. this fixes the issue
+sed 's/--compressed/#--compressed/' ytfzf > _
+mv -f _ ytfzf
+
 make DESTDIR="$1" install
