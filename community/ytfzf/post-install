@@ -21,4 +21,7 @@ to get thumbnails support.
 NOTE: if mpv fails to play the video, it needs to be
 rebuilt. 
 
+A sample configuration file can be found in /usr/share/doc/ytfzf.
+Copy this to $HOME/.config/ytfzf if you wish to alter it per user.
+
 EOF
