@@ -1,0 +1,44 @@
+#!/bin/sh -e
+
+# Bundle libinih just for xfsprogs
+export DESTDIR="$PWD/../libinih"
+
+meson \
+    -Dprefix=/ \
+    -Ddefault_library=static \
+    -Ddistro_install=true \
+    -Dwith_INIReader=true \
+    -Dmulti-line_entries=true \
+    -Dutf-8_bom=true \
+    -Dinline_comments=true \
+    -Duse_heap=false \
+    inih inih/output
+
+ninja -C inih/output
+ninja -C inih/output install
+
+export CFLAGS="$CFLAGS -I$PWD/../libinih/include"
+export LDFLAGS="$LDFLAGS --static -L$PWD/../libinih/lib"
+
+# Remove incorrect bash dependency.
+sed 's/bash/sh/' install-sh > _
+mv -f _ install.sh
+
+# Explicitly include <signal.h> instead of implicit inclusion.
+sed '1i#include <signal.h>' include/linux.h > _
+mv -f _ include/linux.h
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --disable-gettext \
+    --disable-shared \
+    --disable-libicu \
+    --with-pic=no
+
+make
+make \
+    DIST_ROOT="$1" \
+    PKG_ROOT_SBIN_DIR=/usr/bin \
+    PKG_ROOT_LIB_DIR=/usr/lib \
+    install 
