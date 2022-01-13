@@ -1,5 +1,31 @@
 #!/bin/sh -e
 
+# Bundle userspace-rcu, as its not needed elsewhere.
+cd urcu
+
+./bootstrap
+
+./configure \
+    --prefix=/usr \
+    --disable-shared 
+
+make
+make DESTDIR=$1 install
+
+# We dont need these, neither do we want them.
+# Xfsprogs also seems to fail for me when bundling urcu if these exist.
+rm -rf \
+    "$1/usr/lib/liburcu-bp.la" \
+    "$1/usr/lib/liburcu-cds.la" \
+    "$1/usr/lib/liburcu-common.la" \
+    "$1/usr/lib/liburcu-mb.la" \
+    "$1/usr/lib/liburcu-memb.la" \
+    "$1/usr/lib/liburcu-qsbr.la" \
+    "$1/usr/lib/liburcu-signal.la" \
+    "$1/usr/lib/liburcu.la" 
+
+cd ..
+
 # Bundle libinih just for xfsprogs
 export DESTDIR="$PWD/../libinih"
 
@@ -17,12 +43,16 @@ meson \
 ninja -C inih/output
 ninja -C inih/output install
 
-export CFLAGS="$CFLAGS -I$PWD/../libinih/include"
-export LDFLAGS="$LDFLAGS --static -L$PWD/../libinih/lib"
+export CFLAGS="$CFLAGS -I$1/usr/include -I$PWD/../libinih/include"
+export LDFLAGS="$LDFLAGS --static -L$1/usr/lib -L$PWD/../libinih/lib"
 
 # Remove incorrect bash dependency.
 sed 's/bash/sh/' install-sh > _
-mv -f _ install.sh
+mv -f _ install-sh
+
+# There seem to be a permission error, making this non-executable, which makes
+# the build fail
+chmod +x install-sh
 
 # Explicitly include <signal.h> instead of implicit inclusion.
 sed '1i#include <signal.h>' include/linux.h > _
