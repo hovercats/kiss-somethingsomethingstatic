@@ -5,7 +5,9 @@ cat <<EOF
 NOTE: A menu system has to be installed. Possible choices:
 
 - fzf
-- bemenu (external menu)
+- dmenu (default ext. menu)
+- bemenu
+- rofi
 
 To use an external menu, the variable YTFZF_EXTMENU has
 to be set. Example:
