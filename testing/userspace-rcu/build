@@ -1,9 +1,0 @@
-#!/bin/sh -e
-
-./bootstrap
-
-./configure \
-    --prefix=/usr
-
-make
-make install
