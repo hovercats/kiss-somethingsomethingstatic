@@ -10,7 +10,7 @@ cd urcu
     --disable-shared 
 
 make
-make DESTDIR=$1 install
+make DESTDIR="$1" install
 
 # We dont need these, neither do we want them.
 # Xfsprogs also seems to fail for me when bundling urcu if these exist.
@@ -72,3 +72,9 @@ make \
     PKG_ROOT_SBIN_DIR=/usr/bin \
     PKG_ROOT_LIB_DIR=/usr/lib \
     install 
+
+# remove unneeded stuff
+rm -rf \
+    "$1/usr/lib" \
+    "$1/usr/include" \
+    "$1/usr/share/doc"
