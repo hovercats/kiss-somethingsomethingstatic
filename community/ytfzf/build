@@ -8,7 +8,7 @@ mv -f _ ytfzf
 sed 's/doc:/install:/' Makefile > _
 mv -f _ Makefile
 
-make DESTDIR="$1" install
+make PREFIX=/usr DESTDIR="$1" install
 
 # Makefile doesnt install manpage and doc, so we install it ourselves
 mkdir -p \
