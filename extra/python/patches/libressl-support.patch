@@ -15,7 +15,7 @@ diff --git a/Modules/_hashopenssl.c b/Modules/_hashopenssl.c
 index b9e68c05c3..75eb76266a 100644
 --- a/Modules/_hashopenssl.c
 +++ b/Modules/_hashopenssl.c
-@@ -40,10 +40,12 @@
+@@ -45,6 +45,7 @@
  
  #define MUNCH_SIZE INT_MAX
  
@@ -28,7 +28,7 @@ index b9e68c05c3..75eb76266a 100644
  
  static PyModuleDef _hashlibmodule;
  
-@@ -1794,6 +1796,7 @@ hashlib_md_meth_names(PyObject *module)
+@@ -1921,6 +1924,7 @@ hashlib_md_meth_names(PyObject *module)
      return 0;
  }
  
