@@ -20,7 +20,6 @@ _locale -DPy_BUILD_CORE_BUILTIN _localemodule.c
 _io -DPy_BUILD_CORE_BUILTIN -I$(srcdir)/Include/internal -I$(srcdir)/Modules/_io _io/_iomodule.c _io/iobase.c _io/fileio.c _io/bytesio.c _io/bufferedio.c _io/textio.c _io/stringio.c
 faulthandler faulthandler.c
 _tracemalloc _tracemalloc.c
-_peg_parser _peg_parser.c
 _symtable symtablemodule.c
 array arraymodule.c
 cmath cmathmodule.c _math.c -DPy_BUILD_CORE_MODULE -lm
@@ -60,7 +59,6 @@ _sha3 _sha3/sha3module.c
 _blake2 _blake2/blake2module.c _blake2/blake2b_impl.c _blake2/blake2s_impl.c
 syslog syslogmodule.c
 binascii binascii.c
-parser parsermodule.c
 zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz
 pyexpat expat/xmlparse.c expat/xmlrole.c expat/xmltok.c pyexpat.c -I$(srcdir)/Modules/expat -DHAVE_EXPAT_CONFIG_H -DXML_POOR_ENTROPY -DUSE_PYEXPAT_CAPI
 _multibytecodec cjkcodecs/multibytecodec.c
@@ -77,3 +75,5 @@ _lsprof _lsprof.c rotatingtree.c
 *disabled*
 _uuid nis ossaudiodev
 _ctypes _ctypes/_ctypes.c _ctypes/callbacks.c _ctypes/callproc.c _ctypes/stgdict.c _ctypes/cfield.c -I${prefix}/include -L${prefix}/lib -lffi -ldl
+_peg_parser _peg_parser.c
+parser parsermodule.c

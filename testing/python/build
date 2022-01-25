@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < libressl-support.patch
+
 # Reported 20-27% performance improvements.
 # See: "PythonNoSemanticInterpositionSpeedup"
 export CFLAGS="$CFLAGS -fno-semantic-interposition"
@@ -13,7 +15,10 @@ export LDFLAGS="$LDFLAGS -fno-semantic-interposition"
     --with-system-ffi \
     --with-system-expat \
     --with-ensurepip=no \
-    --without-doc-strings
+    --without-doc-strings \
+    --without-pymalloc \
+    --with-builtin-hashlib-hashes="sha1,sha512,sha256,md5" \
+    --with-ssl-default-suites="TLSv1.3:TLSv1.2+AEAD+ECDHE:TLSv1.2+AEAD+DHE" 
 
 make LINKFORSHARED=" " LDFLAGS="$LDFLAGS -static"
 make install
