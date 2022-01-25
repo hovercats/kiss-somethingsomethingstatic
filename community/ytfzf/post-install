@@ -9,19 +9,19 @@ NOTE: A menu system has to be installed. Possible choices:
 - bemenu
 - rofi
 
-To use an external menu, the variable YTFZF_EXTMENU has
-to be set. Example:
+To use an external menu, see
 
-export YTFZF_EXTMENU="bemenu -l 15"
+  man 5 ytfzf
 
-Optional: ueberzug can be installed with 'pip'
-to get thumbnails support.
+  And configure conf.sh file accordingly.
+
+
+Optional dependencies like thumbnail viewers can be found here:
+
+https://github.com/pystardust/ytfzf#optional-dependencies
 
 
 NOTE: if mpv fails to play the video, it needs to be
 rebuilt. 
-
-A sample configuration file can be found in /usr/share/doc/ytfzf.
-Copy this to $HOME/.config/ytfzf if you wish to alter it per user.
 
 EOF
