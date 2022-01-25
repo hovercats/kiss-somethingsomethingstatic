@@ -23,7 +23,7 @@ EOF
     ac_cv_snprintf_returns_bogus=no \
     ac_cv_fread_reads_directories=yes
 
-make LIBS="$(curl-config --static-libs) libgit.a xdiff/lib.a -lz"
+make LIBS="$(curl-config --static-libs) reftable/libreftable.a libgit.a xdiff/lib.a -lz"
 make install
 
 cp -Rf man "$1/usr/share/man"
