@@ -11,4 +11,5 @@ make INSTALL_TOP="$1/usr" \
      INSTALL_DATA="cp -P" \
      install
 
-install -Dm 644 lua.pc "$1/usr/lib/pkgconfig/lua.pc"
+mkdir -p "$1/usr/lib/pkgconfig"
+cp -f lua.pc "$1/usr/lib/pkgconfig"
