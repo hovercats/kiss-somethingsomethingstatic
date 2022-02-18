@@ -1,6 +1,9 @@
 #!/bin/sh -e
 
-patch -p1 < fix-fd-issue.patch
+patch -p1 < 0001-libiberty-Implement-pex_unix_exec_child-using-posix_.patch
+patch -p1 < 0002-Adjust-style-to-prevent-gcc-warning.patch
+patch -p1 < 0003-Remove-support-for-long-double-in-error-formatter.patch
+patch -p1 < 0004-bfd-Remove-return-with-expression-in-void-function.patch
 
 cat > makeinfo <<EOF
 #!/bin/sh
