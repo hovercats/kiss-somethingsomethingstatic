@@ -1,0 +1,40 @@
+Kiss-somethingsomethingstatic
+=============================
+
+An experimental KISS repository with goal of providing a fully working
+statically linked enviroment.
+We also aim to use more minimal tools, whenever such tools are a viable option.
+
+
+Overview
+--------
+
+Everything in this repo *should* build statically, but see issues for possible
+exceptions.
+All packages should have the appropriate flags/configurations in their
+buildscript, so no user interactions is needed at all.
+
+Also worth noting:
+This repo will only serve as a base, and if you wish to use this repo for
+anything remotely usefull, youll need to figure out how to include the
+neccessary shared libs, for i.e. mesa, llvm etc, while still building static
+binaries.
+
+
+Contributions
+-------------
+
+Contributions are welcomed.
+If something isnt working, or something comes to mind, feel free to create an
+issue, or a PR.
+
+
+Links
+-----
+
+If you happen to like the idea of a statically built system.
+You may wish to check out some similar project aswell:
+
+[0] https://github.com/oasislinux/oasis
+[1] https://github.com/sabotage-linux/sabotage
+[2] https://zandra.org (fork of morpheus linux)
