@@ -1,16 +1,20 @@
 m4
 ________________________________________________________________________________
 
-M4, or OM4, is a portable version of the OpenBSD m4 program
+GNU m4 is an implementation of m4 for the GNU Project. It is designed to avoid
+many kinds of arbitrary limits found in traditional m4 implementations, such as
+maximum line lengths, maximum size of a macro and number of macros. Removing
+such arbitrary limits is one of the stated goals of the GNU Project. [0]
 
-Upstream: https://github.com/ibara/m4
+Upstream: https://www.gnu.org/software/m4/
+
 
 [000] Index
 ________________________________________________________________________________
 
 * Installation ........................................................... [001]
-* Useage ................................................................. [002]
-* Refernce ............................................................... [003]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
 
 
 [001] Installation
@@ -18,7 +22,7 @@ ________________________________________________________________________________
 
 +------------------------------------------------------------------------------+
 |                                                                              |
-| $ kiss b m4                                                                  |
+|  $ kiss b m4                                                                 |
 |                                                                              |
 +------------------------------------------------------------------------------+
 
@@ -32,4 +36,5 @@ Refer to the manual pages and command help output.
 [003] References
 ________________________________________________________________________________
 
-[0] https://github.com/ibara/m4
+[0] https://en.wikipedia.org/wiki/M4_(computer_language)
+
