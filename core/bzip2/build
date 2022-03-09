@@ -2,6 +2,8 @@
 
 make CC="${CC:-cc} $CFLAGS -static"
 
+mkdir -p "$1/usr/bin"
+
 for bin in bzip2 bzdiff bzgrep bzip2recover bzmore; do
     cp "$bin" "$1/usr/bin/$bin"
     chmod 755 "$bin" "$1/usr/bin/$bin"
