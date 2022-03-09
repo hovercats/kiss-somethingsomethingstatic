@@ -2,7 +2,11 @@
 
 make CC="${CC:-cc} $CFLAGS -static"
 
-mkdir -p "$1/usr/bin"
+mkdir -p \
+  "$1/usr/bin" \
+  "$1/usr/lib" \
+  "$1/usr/include" \
+  "$1/usr/share/man/man1"
 
 for bin in bzip2 bzdiff bzgrep bzip2recover bzmore; do
     cp "$bin" "$1/usr/bin/$bin"
