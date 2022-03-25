@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+make CFLAGS="$CFLAGS -static"
+make PREFIX=/usr install
+
+# symlink to fzf for compabilty reasons
+ln -s "$1/usr/bin/fzy" "$1/usr/bin/fzf"
