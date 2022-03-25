@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+# patch out fzf specific stuff, because we use fzy instead
+patch -p1 < fzy.patch
+
 # Our curl does not support this option.
 sed 's/--compressed/#--compressed/' ytfzf > _
 mv -f _ ytfzf

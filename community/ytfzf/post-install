@@ -5,6 +5,7 @@ cat <<EOF
 NOTE: A menu system has to be installed. Possible choices:
 
 - fzf
+  - or fzy with our patch
 - dmenu (default ext. menu)
 - bemenu
 - rofi
