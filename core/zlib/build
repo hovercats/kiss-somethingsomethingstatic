@@ -2,6 +2,8 @@
 
 export CFLAGS="$CFLAGS -fPIC"
 
+patch -p1 < Fix-CC-logic-in-configure.patch
+
 ./configure \
     --prefix=/usr \
     --libdir=/usr/lib \
