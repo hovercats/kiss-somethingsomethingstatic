@@ -2,6 +2,10 @@
 
 mkdir -p "$1/usr/bin"
 
+# change the dir of init scripts
+sed 's|/lib/init|/etc|' shinit > _
+mv -f _ shinit
+
 chmod 755 shinit poweroff
 
 cp shinit poweroff "$1/usr/bin"
