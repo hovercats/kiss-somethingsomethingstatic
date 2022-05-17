@@ -5,3 +5,4 @@ files/os-release
 files/passwd
 files/profile
 files/shadow
+files/kshrc
