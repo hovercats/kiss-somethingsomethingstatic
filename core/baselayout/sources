@@ -6,3 +6,7 @@ files/passwd
 files/profile
 files/shadow
 files/kshrc
+files/rc.init
+files/rc.shutdown
+files/rc.local
+files/rc.svc
