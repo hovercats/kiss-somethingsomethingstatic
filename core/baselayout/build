@@ -7,7 +7,12 @@ mkdir -m 755 \
     "$1/home" \
     "$1/mnt" \
     "$1/run" \
-    "$1/var" \
+    "$1/usr" \
+    "$1/usr/bin" \
+    "$1/usr/lib" \
+    "$1/usr/sbin" \
+    "$1/usr/share" \
+    "$1/usr/share/man"
 
 mkdir -m 555 \
     "$1/proc" \
