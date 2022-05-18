@@ -2,6 +2,10 @@
 
 mkdir -p "$1/usr/bin"
 
+# correct name of rc file
+sed 's/rc.boot/rc.init/' shinit > _
+mv -f _ shinit
+
 # change the dir of init scripts
 sed 's|/lib/init|/etc|' shinit > _
 mv -f _ shinit
