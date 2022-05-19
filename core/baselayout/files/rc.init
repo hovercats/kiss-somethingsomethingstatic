@@ -2,16 +2,27 @@
 
 umask 022
 
+echo "Booting..."
+
 mkdir -p /dev/pts
 mkdir -p /dev/shm
 
 # mount stuff
+echo "mounting proc"
 mount -t proc none /proc
-mount -o remount,rw /
-mount -a
+echo "mounting root partition"
+mount -o remount,rw / || /bin/sh
+echo "mounting the rest of the system"
+mount -a || /bin/sh
+
+# Uncomment to enable gettys
+ for getty in 1 2 ; do # add more numbers for more ttys
+     while :; do /sbin/getty tty${getty} 0 linux ; done &  # busybox/toybox getty
+# #    while :; do /sbin/getty /dev/tty${getty} linux ; done &   # ubase getty
+done
 
 # run local configs
-/etc/rc.local
+#/etc/rc.local
 
 # start service manager
-/etc/rc.svc
+#/etc/rc.svc
