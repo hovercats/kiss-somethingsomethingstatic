@@ -8,9 +8,5 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin
 # Set default umask.
 umask 022
 
-# Load profiles from /etc/profile.d
-for file in /etc/profile.d/*.sh; do
-    [ -r "$file" ] && . "$file"
-done
-
-unset file
+export ENV=/etc/kshrc
+export PS1="\$ "

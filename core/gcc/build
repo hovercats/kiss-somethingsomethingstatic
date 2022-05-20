@@ -2,6 +2,8 @@
 
 export LDFLAGS="$LDFLAGS -static"
 
+patch -p1 < musl-sched_h-calloc-poison.patch
+
 # Make sure gmp is built with generic options.
 cp gcc/gmp/configfsf.guess gcc/gmp/config.guess
 cp gcc/gmp/configfsf.sub   gcc/gmp/config.sub
