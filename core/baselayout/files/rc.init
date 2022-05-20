@@ -10,10 +10,12 @@ mkdir -p /dev/shm
 # mount stuff
 echo "mounting proc"
 mount -t proc none /proc
+
 echo "mounting root partition"
 mount -o remount,rw / || /bin/sh
+
 echo "mounting the rest of the system"
-mount -a || /bin/sh
+mount -a || true || /bin/sh
 
 # Uncomment to enable gettys
  for getty in 1 2 ; do # add more numbers for more ttys
