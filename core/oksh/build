@@ -10,5 +10,3 @@
 
 make
 make install
-
-#ln -s "$1/usr/bin/ksh" "$1/usr/bin/sh"
