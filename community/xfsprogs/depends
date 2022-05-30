@@ -1,6 +1,3 @@
-automake      make
-libtool       make
-#gnu-m4        make
 linux-headers make
 meson         make
 util-linux
